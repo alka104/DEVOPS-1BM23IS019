@@ -1,0 +1,13 @@
+Q1. What is the purpose of the --network or --net flag?
+It connects a container to a specified Docker network, allowing it to communicate with other containers on that network.
+Q2. How do containers communicate with each other on the same network?
+Containers on a user-defined bridge network can communicate using their container names as DNS hostnames and the relevant container ports. For example, Flask can reach MySQL at mysql:3306 and Redis at redis:6379.
+Q3. What is the difference between bridge and host networking?
+- Bridge: Containers use an isolated virtual network. Ports can be published to the host using -p.
+- Host: On supported systems, a container shares the host's network namespace instead of receiving its own isolated network stack. Port publishing generally isn't needed and is ignored in host mode.
+Q4. How do you expose a container port to the host machine?
+Use -p HOST_PORT:CONTAINER_PORT. For example:
+docker run -d --name flask --network my-bridge-net -p 5001:5001 flask-api
+
+
+This publishes the container's port 5001 on host port 5001.
